@@ -1,6 +1,6 @@
 ## How to install
 ```bash
-npm run i
+npm i
 ```
 
 ## How to Start
