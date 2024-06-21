@@ -1,19 +1,19 @@
-# How to install
+## How to install
 ```bash
 npm run i
 ```
 
-# How to Start
+## How to Start
 ```bash
 npm run dev
 ```
 
-# How to Test
+## How to Test
 ```bash
 npm run test
 ```
 
-Open:
+Open those files and write your tests:
 
 - [To Do](./src/components/to-do/ToDo.test.tsx)
 - [Editable Input](./src/components/editable-input/EditableInput.test.tsx)
