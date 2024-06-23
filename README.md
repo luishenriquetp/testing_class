@@ -17,3 +17,5 @@ Open those files and write your tests:
 
 - [To Do](./src/components/to-do/ToDo.test.tsx)
 - [Editable Input](./src/components/editable-input/EditableInput.test.tsx)
+
+Read more about [Selectors](./Selectors.md)
