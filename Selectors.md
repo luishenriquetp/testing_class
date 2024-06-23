@@ -4,7 +4,8 @@
 [React Testing Library Doc](https://testing-library.com/docs/react-testing-library/intro/)
 
 ## Selectors Table
-![alt text](./assets/image.png)
+![Selectors](./assets/image.png)
+
 
 ## Matching Multiple Elements
 All of these functions throw an error if more than one match is found… Unless you use the key word All in them. That means you can use getAllBy, queryAllBy and findAllBy.
