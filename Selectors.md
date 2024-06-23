@@ -4,7 +4,7 @@
 [React Testing Library Doc](https://testing-library.com/docs/react-testing-library/intro/)
 
 ## Selectors Table
-![Selectors](./assets/image.png)
+![Selectors](./assets/selectors.png)x
 
 
 ## Matching Multiple Elements
