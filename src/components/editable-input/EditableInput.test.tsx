@@ -1,21 +1,112 @@
-import { describe, expect, test } from "vitest";
-import "@testing-library/jest-dom";
+import { describe, expect, it, vi } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 
-describe("Tests for EditableInput", () => {
-  test("My Test", () => {
+import { EditableInput } from './EditableInput';
 
-    expect(true).not.toBe(false)
-  });
+describe('EditableInput', () => {
+	const mockItem = { id: 1, text: 'Test Task' };
+	const mockHandleDelete = vi.fn();
+	const mockHandleEdit = vi.fn();
 
+	it('should render initial components', () => {
+		render(
+			<EditableInput
+				item={mockItem}
+				handleDelete={mockHandleDelete}
+				handleEdit={mockHandleEdit}
+			/>
+		);
+		expect(screen.getByText('Test Task')).toBeInTheDocument();
+		expect(screen.getByText('Delete')).toBeInTheDocument();
+		expect(screen.getByText('Edit')).toBeInTheDocument();
+	});
 
-/*
-Continue aqui:
+	it('should toggle edit mode and render input', () => {
+		render(
+			<EditableInput
+				item={mockItem}
+				handleDelete={mockHandleDelete}
+				handleEdit={mockHandleEdit}
+			/>
+		);
 
-- Apertar os botôes e suas consequencias
-- Verificar se os botoes que devem aparecer estao renderizados
-- Verificar se os botoes que nao devem aparecer nao estao renderizados
-- Verificar se o input esta na tela quando o edit for apertado
-- Veririfcar o que acontece apos o apply
-etc
-*/
+		const editButton = screen.getByText('Edit');
+		fireEvent.click(editButton);
+
+		const input = screen.getByDisplayValue('Test Task');
+		expect(input).toBeInTheDocument();
+		expect(screen.getByText('Apply')).toBeInTheDocument();
+		expect(screen.getByText('Cancel')).toBeInTheDocument();
+	});
+
+	it('should cancel edit mode', () => {
+		render(
+			<EditableInput
+				item={mockItem}
+				handleDelete={mockHandleDelete}
+				handleEdit={mockHandleEdit}
+			/>
+		);
+
+		const editButton = screen.getByText('Edit');
+		fireEvent.click(editButton);
+
+		const cancelButton = screen.getByText('Cancel');
+		fireEvent.click(cancelButton);
+
+		expect(screen.getByText('Test Task')).toBeInTheDocument();
+		expect(screen.queryByDisplayValue('Test Task')).not.toBeInTheDocument();
+	});
+
+	it('should apply edit mode', () => {
+		render(
+			<EditableInput
+				item={mockItem}
+				handleDelete={mockHandleDelete}
+				handleEdit={mockHandleEdit}
+			/>
+		);
+
+		const editButton = screen.getByText('Edit');
+		fireEvent.click(editButton);
+
+		const input = screen.getByDisplayValue('Test Task');
+		fireEvent.change(input, { target: { value: 'Updated Task' } });
+
+		const applyButton = screen.getByText('Apply');
+		fireEvent.click(applyButton);
+
+		expect(mockHandleEdit).toHaveBeenCalledWith(mockItem.id, 'Updated Task');
+		expect(screen.getByText('Updated Task')).toBeInTheDocument();
+	});
+
+	it('should delete item', () => {
+		render(
+			<EditableInput
+				item={mockItem}
+				handleDelete={mockHandleDelete}
+				handleEdit={mockHandleEdit}
+			/>
+		);
+
+		const deleteButton = screen.getByText('Delete');
+		fireEvent.click(deleteButton);
+
+		expect(mockHandleDelete).toHaveBeenCalledWith(mockItem.id);
+	});
+
+	it('should only render Edit and Delete buttons initially', () => {
+		render(
+			<EditableInput
+				item={mockItem}
+				handleDelete={mockHandleDelete}
+				handleEdit={mockHandleEdit}
+			/>
+		);
+
+		expect(screen.getByText('Edit')).toBeInTheDocument();
+		expect(screen.getByText('Delete')).toBeInTheDocument();
+		expect(screen.queryByText('Apply')).not.toBeInTheDocument();
+		expect(screen.queryByText('Cancel')).not.toBeInTheDocument();
+	});
 });
