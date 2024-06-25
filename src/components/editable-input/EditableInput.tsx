@@ -11,10 +11,14 @@ export function EditableInput({
   handleDelete,
   handleEdit,
 }: Readonly<Props>) {
+  const [inputValue, setInputValue] = useState(item.text);
   const [onEdit, setOnEdit] = useState(false);
   const handleSetEdit = () => setOnEdit((state) => !state);
-  const handleCancelEdit = () => setOnEdit(false);
-  const [inputValue, setInputValue] = useState(item.text);
+
+  const handleCancelEdit = () => {
+    setOnEdit(false);
+    setInputValue(item.text);
+  };
 
   const handleType = (e: ChangeEvent<HTMLInputElement>) =>
     setInputValue(e.target.value);
