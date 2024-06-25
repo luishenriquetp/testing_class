@@ -9,12 +9,7 @@ describe("Tests for ToDo", () => {
 
     const title = await screen.findByText(/Todo List/);
 
-    expect(title).toBeInTheDocument();
-
-    const input = screen.getByPlaceholderText("Type your task");
-
-    await userEvent.type(input, "Jane Doe");
-    expect(input).toHaveValue("Jane Doe");
+    expect(title).not.toBeInTheDocument();
   });
 
   test("Input should be showing what is typed", async () => {
